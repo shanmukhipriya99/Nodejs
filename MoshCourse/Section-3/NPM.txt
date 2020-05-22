@@ -1,3 +1,17 @@
 1. It is important to have package.json before installing any node-modules.
 2. This can be achieved with "npm init".
 3. If you're okay with the default values, enter "npm init --yes".
+4. npm list: provides a list of all dependencies along with sub-dependencies, along with versions.
+5. npm list --depth=0: a list of all dependencies that our project is directly related to, along with versions.
+6. npm view <package_name>: gives all of it's metadata.
+7. npm view <package_name> dependencies: properties of the dependencies.
+8. npm view <package_name> versions: list of all releases versions.
+9. npm i <package_name>@x.y.z: installs the specified versions.
+10. npm outdated: lists the current, wanted, latest versions and the location.
+x.y.z: x->Major, y->Minor, z->Patch
+11. npm update: updates the version but remains in the same major.
+12. npm i -g npm-check-updates: installs npm-check-updates.
+13. npm-check-updates:compares current and latest version
+14. ncu -u: updates package.json including Major, then "npm i" to install the updated versions.
+15. 
+ 
