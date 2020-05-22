@@ -13,5 +13,16 @@ x.y.z: x->Major, y->Minor, z->Patch
 12. npm i -g npm-check-updates: installs npm-check-updates.
 13. npm-check-updates:compares current and latest version
 14. ncu -u: updates package.json including Major, then "npm i" to install the updated versions.
-15. 
+15. npm i <package_name> --save-dev:to install a developer dependency.
+16. npm un <package_name>: uninstalls the package.
+17. npm i -g npm@x.y.z: to update to a specific version (update to the latest version without using @x.y.z)
+-g means global
+18. npm adduser: to create an account in npm
+19. npm login: to login
+20. npm publish: to publish a package(be sure to be in that directory)
+21. To update a published package:
+	Once the changes have been made, either update the version manually in the package.json or
+	"npm version <major(or)minor(or)patch>" to update automatically.
+	Then, "npm publish".
+22. 
  
