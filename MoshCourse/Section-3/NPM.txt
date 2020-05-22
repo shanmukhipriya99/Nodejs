@@ -1,0 +1,3 @@
+1. It is important to have package.json before installing any node-modules.
+2. This can be achieved with "npm init".
+3. If you're okay with the default values, enter "npm init --yes".
