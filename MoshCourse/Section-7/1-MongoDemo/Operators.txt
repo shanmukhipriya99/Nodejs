@@ -1,0 +1,20 @@
+Comparision operators
+
+eq (equal)
+ne (not equal)
+gt (greater than)
+gte (greater than or equal)
+lt (less than)
+lte (less than or equal)
+in 
+nin (not in)
+
+Logical operators
+or 
+and
+
+Regular expressions
+/^start/ - case sensitive 
+/end$/   -   "     "
+/end$/i  - ! "     "
+/.*contains.*/
