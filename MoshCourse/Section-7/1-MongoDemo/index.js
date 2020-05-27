@@ -2,14 +2,15 @@ const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/playground')  //returns a promise
     .then(() => console.log('Connected to MongoDB...'))
-    .catch(err => console.error('Coild not connect to MongoDB...'));
+    .catch(err => console.error('Could not connect to MongoDB...'));
 
 const courseSchema = new mongoose.Schema({   //object
     name: String,
     author: String,
     tags: [ String ],
     date: { type: Date, default: Date.now },
-    isPublished: Boolean
+    isPublished: Boolean,
+    Price: Number
 });
 
 const Course = mongoose.model('Course', courseSchema);  //class
@@ -45,3 +46,4 @@ async function getCourses() {
 }
 
 getCourses();
+
