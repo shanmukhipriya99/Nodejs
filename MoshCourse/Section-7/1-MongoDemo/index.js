@@ -5,12 +5,47 @@ mongoose.connect('mongodb://localhost/playground')  //returns a promise
     .catch(err => console.error('Could not connect to MongoDB...'));
 
 const courseSchema = new mongoose.Schema({   //object
-    name: String,
+    name: { 
+        type: String, 
+        required: true,  // use this for validation
+        minlength: 5,
+        maxlength: 255,
+        // match: /pattern/    /checking for pattern
+     },  
+    //  category: {    //look @ enum!!
+    //     type: String,
+    //     required: true,
+    //     enum: [ 'web', 'mobile', 'network']
+    //  },
     author: String,
-    tags: [ String ],
+    tags: {
+        type: String,
+        validate: {                       //custom validator
+            validator: function(v) {      // v->value
+                return v && v.length>0;   // should have a value with length>0
+            },
+            message: 'A course should have atleast one tag.'
+        }
+    },
+    // tags: {           for async validation
+    //     type: String,
+    //     validate: {                       //custom validator
+    //         isAsync: true,
+    //         validator: function(v, callback) {      // use callback
+    //             setTimeout(() => {
+    //               const result = return v && v.length>0;
+    //               callback(result);
+    //             }, 4000);
+    //         },
+    //         message: 'A course should have atleast one tag.'
+    //     }
+    // },
     date: { type: Date, default: Date.now },
     isPublished: Boolean,
-    Price: Number
+    price: {
+        type: Number,
+        required: function() { return this.isPublished; } //returned only if isPublished is true, this cannot be an arrow function.
+    }
 });
 
 const Course = mongoose.model('Course', courseSchema);  //class
@@ -18,13 +53,23 @@ const Course = mongoose.model('Course', courseSchema);  //class
 async function createCourse() {
     const course = new Course({
         name: 'Angular Course',
+        // category: '-'; would give an error as value doesnt match enum values
         author: 'Shanmukhi',
         tags: ['angular', 'backend'],
-        isPublished: true
+        isPublished: true,
+        price: 15
     });
 
-    const result = await course.save();
+    const result = await course.save();  // add a try, catch block to handle errors incase of validation
     console.log(result);
+    // try {
+    //     const result = await course.save();  
+    //     console.log(result);
+    // }
+    // catch (ex) {                // displays error message for each field, if any
+    //     for (field in ex.errors)
+    //         console.log(ex.errors[field].message);
+    // }
 }
 //createCourse();
 async function getCourses() {

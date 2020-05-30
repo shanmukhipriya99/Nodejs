@@ -6,3 +6,15 @@ Types in schema:
 5. Boolean
 6. ObjectID
 7. Array
+
+Properties of schema type objects:
+1. String-  required:t/f
+	    enum:[ '---', '---' ]
+	    lowercase:t/f
+	    uppercase:"
+	    trim: "   (removes padding, if any)
+2. Number- min
+	   max
+	   required
+	   get: value => Math.round(value)
+ 	   set:   "    "  "    "      "
