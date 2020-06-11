@@ -1,4 +1,4 @@
-const { Genre, validate} = require('../models/genre');
+const { Customer, validate } = require('../models/customer');
 const express = require('express');
 const router = express.Router();
 
@@ -10,8 +10,8 @@ const router = express.Router();
 // ];
 //GET method
 router.get('/', async (req, res) => {
-    const genres = await Genre.find().sort('name');
-    res.send(genres);
+    const customers = await Customer.find().sort('name');
+    res.send(customers);
 });
 //POST method
 router.post('/', async (req, res) => {
@@ -19,40 +19,46 @@ router.post('/', async (req, res) => {
     const {error} = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message); //400 - Bad Request
     //create
-    let genre = new Genre({ name: req.body.name });
-    genre = await genre.save();
-    res.send(genre);  //view
+    let customer = new Customer({ 
+        name: req.body.name,
+        phone: req.body.phone,
+        isGold: req.body.isGold    
+    });
+    customer = await customer.save();
+    res.send(customer);  //view
 });
 //PUT method
 router.put('/:id', async (req, res) => {
     const {error} = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message); //400 - Bad Request
     //check if genre exists
-    const genre = await Genre.findByIdAndUpdate(req.params.id, { name: req.body.name }, {
+    const customer = await Customer.findByIdAndUpdate(req.params.id, { name: req.body.name }, {
         new: true
     });
     
-    if(!genre) return res.status(404).send("Genre not found!");
+    if(!customer) return res.status(404).send("Customer not found!");
     //validate
     
     //update
-    res.send(genre);   //view
+    res.send(customer);   //view
 });
 //DELETE method
 router.delete('/:id', async (req, res) => {
     //check if genre exists
-    const genre = await Genre.findByIdAndRemove(req.params.id);
+    const customer = await Customer.findByIdAndRemove(req.params.id);
 
-    if(!genre) return res.status(404).send("Genre not found!");
+    if(!customer) return res.status(404).send("Customer not found!");
    //delete
-    res.send(genre);   //view
+    res.send(customer);   //view
 });
 
 router.get('/:id', async (req, res) => {
-    const genre = await Genre.findById(req.params.id);
+    const customer = await Customer.findById(req.params.id);
 
-    if (!genre) return res.status(404).send("Genre not found!");
-    res.send(genre);
+    if (!customer) return res.status(404).send("Customer not found!");
+    res.send(customer);
   });
-  
+
+
+
 module.exports = router;
