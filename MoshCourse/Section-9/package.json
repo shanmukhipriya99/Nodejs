@@ -1,17 +1,15 @@
 {
-  "name": "project",
+  "name": "Section-9",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "population.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
-    "fawn": "^2.1.5",
-    "joi": "^14.3.1",
-    "mongoose": "^5.9.18"
+    "mongoose": "^5.9.20"
   }
 }

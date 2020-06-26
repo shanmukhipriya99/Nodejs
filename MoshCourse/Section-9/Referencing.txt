@@ -1,0 +1,28 @@
+No RELATIONSHIPS in MongoDB! It's not an error to link to collections without a common entry.
+
+Trade-off between query performance and consistency
+
+1. Using References (Normalization) -> consistency
+let author = {
+	name: "Shanmukhi"
+}
+let course = {
+	author: "id"
+}
+
+2. Using Embedded Documents (Denormalization) -> performance
+let course = {
+	author: {
+	  name: "Shanmukhi"
+	}
+}
+
+3. Hybrid
+let author = {
+	name: "Shanmukhi"
+}
+let course = {
+	author: {
+	  id: "ref"
+	}
+}
