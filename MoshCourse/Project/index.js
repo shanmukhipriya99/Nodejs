@@ -15,10 +15,15 @@ if(!config.get('jwt')) {
     process.exit(1); //0->Success
 }
 
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
+
 mongoose.connect('mongodb://localhost/vidly')
     .then(() => console.log('Connected to MongoDB...'))
     .catch( err => console.log("Could not connect to MongoDB..."));
 
+//middleware
 app.use(express.json());
 app.use('/api/genres', genres);
 app.use('/api/customers', customers);
