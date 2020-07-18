@@ -12,7 +12,7 @@ const router = express.Router();
 //GET method
 router.get('/', auth, async (req, res) => {
     const genres = await Genre.find().sort('name');
-    res.send(genres);
+    res.send(genres);    
 });
 //POST method
 router.post('/', async (req, res) => {
