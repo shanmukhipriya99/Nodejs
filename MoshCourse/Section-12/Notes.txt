@@ -1,0 +1,16 @@
+1) Automated testing is the practice of writing code to test our code, and then run those tests in an automated fashion. 
+   So, with automated testing, our source code consists of application code, which we also call production code and test code.
+2) The most important benefit is that you can catch the bugs BEFORE deploying our application.
+3) Refactoring means changing the structure of the code without changing its behaviour.
+4) 3 types of tests: unit tests, integration tests and end-to-end tests. 
+5) Unit test: You test a unit of the application without its external dependencies such as files, 
+   databases, message queues, web services and so on.
+   Tests a unit of an application without its external dependencies.
+   Execute very fast
+6) Integration test: An integration test, tests a class or a component with its external dependencies.
+   Tests the application with its external dependencies.
+   Take longer to execute
+7) End-to-end test: drives an application through its user-interface.
+   Very slow
+8) Test framework gives us a library that includes a bunch of utility functions(for writing tests), test runner (executes the tests & gives reports) 
+    ex: jasmine, mocha, jest
