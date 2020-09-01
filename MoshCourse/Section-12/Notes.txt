@@ -14,3 +14,4 @@
    Very slow
 8) Test framework gives us a library that includes a bunch of utility functions(for writing tests), test runner (executes the tests & gives reports) 
     ex: jasmine, mocha, jest
+9) npm i jest --save-dev
