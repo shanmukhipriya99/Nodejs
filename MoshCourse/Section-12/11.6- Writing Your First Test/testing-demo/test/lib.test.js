@@ -29,3 +29,13 @@ describe('greet', () => {
     }); 
 });
 
+describe('getCurrencies', () => {
+    it('should return supported currencies', () => {
+        const result = lib.getCurrencies('Shan');
+        // expect(result).toContain('USD');
+        // expect(result).toContain('AUD');   // proper way
+        // expect(result).toContain('EUR');
+        // ideal way
+        expect(result).toContain(expect.arrayContaining(['EUR', 'USD', 'AUD']));
+    }); 
+});
