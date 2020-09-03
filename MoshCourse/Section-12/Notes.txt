@@ -15,3 +15,10 @@
 8) Test framework gives us a library that includes a bunch of utility functions(for writing tests), test runner (executes the tests & gives reports) 
     ex: jasmine, mocha, jest
 9) npm i jest --save-dev
+10)nameOfModuleToBeTested.test.js
+11)Tests shouldn't be too specific or too general.
+12)toBe() compares the memory references, hence fails for objects
+13)Incase of toEqual(), the exact paramters are compared, may cause discrepancy in objects.
+   toMatchObject() can be used to compare objects without listing all the paramters
+   toHaveProperty() can be used to compare specific parameters of an object, but the type of the values should be same
+
