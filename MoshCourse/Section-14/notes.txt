@@ -1,0 +1,12 @@
+1) TDD -> Test-Driven Development
+2) With TDD you write your tests before writing the production code
+3) Steps involved:
+    Write a failing test
+    Write the simplest code to make the test pass
+    Refactor if necessary
+4) Benefits of TDD:
+    testable source code
+    full coverage by tests
+    simpler implementation
+5) beforeEach() is a function that contains common code that needs to be executed in many tests.
+6) afterEach() is a function that contains common code that needs to be executed after many tests.
