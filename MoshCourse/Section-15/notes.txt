@@ -1,0 +1,5 @@
+1) Deployment options:
+    PaaS -> Platform as a Service
+    Docker
+2) PaaS if you don't want to worry about servers, load balancers, etc.
+    ex: Heroku, Google Cloud Platform, AWS, Azure, etc.
