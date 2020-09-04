@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 async function run(){
     const salt = await bcrypt.genSalt(10); //no. of times to run the alg. to generate the salt
