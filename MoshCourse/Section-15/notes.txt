@@ -3,3 +3,31 @@
     Docker
 2) PaaS if you don't want to worry about servers, load balancers, etc.
     ex: Heroku, Google Cloud Platform, AWS, Azure, etc.
+3) helmet is a middleware package that will protect from web vulnerabilities.
+4) compression ia a npm package for compressing the HTTP response that is sent to the client.
+5) If there are firewall issues:
+    set HTTP_PROXY=http://proxy.server.com:1234
+    replace set with execute incase of mac
+    execute this in the terminal to set the env variable
+6) nodemon is purely for development level.
+7) To deploy on heroku:
+    Make sure all the tests have passed successfully
+    install heroku cli
+    heroku login
+    create env variable, if necessary
+    create a script: "start": "node index.js"
+    after the scripts:
+    "engines": {
+        "node": "node_version"
+    }
+    upload the code to git 
+    heroku create (or) heroku create unique_name
+        this creates two repos: one in local and one in heroku
+        returns the url of the app on heroku and url of the remote git repo on heroku
+        git remote -v : to see the list of remote repos
+        git push heroku master
+    heroku logs : to check the logs
+    to set config variables:
+        heroku config:set name_of_private_key=value
+        heroku config:set NODE_ENV=production
+        heroku config : to see the config variables that are set
