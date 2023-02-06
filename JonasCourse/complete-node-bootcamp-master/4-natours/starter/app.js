@@ -29,7 +29,7 @@ app.get('/api/v1/tours', (req, res) => {
 app.get('/api/v1/tours/:id', (req, res) => {
   // console.log(req.params)
   const tour = tours.find((el) => el.id === parseInt(req.params.id));
-  //   if (req.params.id > tours.length) {
+  //   if (parseInt(req.params.id) > tours.length) {
   if (!tour) {
     return res.status(404).json({
       status: 'Fail',
@@ -63,6 +63,23 @@ app.post('/api/v1/tours', (req, res) => {
       });
     }
   );
+});
+
+app.patch('/api/v1/tours/:id', (req, res) => {
+  // for the update operation
+  // don't need the entire entry like in PUT
+  if (parseInt(req.params.id) > tours.length) {
+    return res.status(404).json({
+      status: 'Fail',
+      message: 'Invalid id',
+    });
+  }
+  res.status(200).json({
+    status: 'Success',
+    data: {
+      tour: `Updated the tour with id ${req.params.id}`,
+    },
+  });
 });
 
 app.listen(port, () => {
