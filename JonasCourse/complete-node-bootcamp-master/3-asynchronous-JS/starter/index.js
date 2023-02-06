@@ -86,6 +86,7 @@ const getDogPic = async () => {
     console.log('Random dog image saved!');
   } catch (err) {
     console.log(err.message);
+    throw(err)
   }
 };
 getDogPic();
