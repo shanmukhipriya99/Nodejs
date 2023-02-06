@@ -55,18 +55,37 @@ const writeFileProm = (imgUrl) => {
   });
 };
 
-readFileProm('./dog.txt')
-  .then((data) => {
+// 4-Async/Await
+// readFileProm('./dog.txt')
+//   .then((data) => {
+//     console.log(`Breed: ${data}`);
+//     return superagent.get(`https://dog.ceo/api/breed/${data}/images/random`);
+//   })
+//   .then((res) => {
+//     console.log(res.body.message);
+//     return writeFileProm(res.body.message);
+//   })
+//   .then(() => {
+//     console.log('Random dog image saved!');
+//   })
+//   .catch((err) => {
+//     console.log(err.message);
+//   });
+
+const getDogPic = async () => {
+  try {
+    const data = await readFileProm('./dog.txt');
     console.log(`Breed: ${data}`);
-    return superagent.get(`https://dog.ceo/api/breed/${data}/images/random`);
-  })
-  .then((res) => {
+
+    const res = await superagent.get(
+      `https://dog.ceo/api/breed/${data}/images/random`
+    );
     console.log(res.body.message);
-    return writeFileProm(res.body.message);
-  })
-  .then(() => {
+
+    await writeFileProm(res.body.message);
     console.log('Random dog image saved!');
-  })
-  .catch((err) => {
+  } catch (err) {
     console.log(err.message);
-  });
+  }
+};
+getDogPic();
