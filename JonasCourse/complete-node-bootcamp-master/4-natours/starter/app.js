@@ -7,6 +7,7 @@ const app = express();
 // Middlewares
 app.use(morgan('dev'));
 app.use(express.json()); // middleware that handles the json input
+app.use(express.static('./public'));
 // middleware functions that apply to every API call if positioned before the route handler
 app.use((req, res, next) => {
   console.log('Middleware here!');
