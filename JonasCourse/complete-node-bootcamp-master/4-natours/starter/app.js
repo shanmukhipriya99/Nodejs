@@ -5,7 +5,9 @@ const userRouter = require('./routes/userRoutes');
 
 const app = express();
 // Middlewares
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 app.use(express.json()); // middleware that handles the json input
 app.use(express.static('./public'));
 // middleware functions that apply to every API call if positioned before the route handler
