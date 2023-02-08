@@ -3,6 +3,17 @@ const fs = require('fs');
 // Route Handlers
 const tours = JSON.parse(fs.readFileSync('./dev-data/data/tours-simple.json'));
 
+exports.checkID = (req, res, next, val) => {
+  console.log(`Tour id: ${val}`);
+  if (parseInt(val) > tours.length) {
+    return res.status(404).json({
+      status: 'Fail',
+      message: 'Invalid id',
+    });
+  }
+  next();
+};
+
 exports.getAllTours = (req, res) => {
   res.status(200).json({
     status: 'Success',
@@ -18,12 +29,12 @@ exports.getTour = (req, res) => {
   // console.log(req.params)
   const tour = tours.find((el) => el.id === parseInt(req.params.id));
   //   if (parseInt(req.params.id) > tours.length) {
-  if (!tour) {
-    return res.status(404).json({
-      status: 'Fail',
-      message: 'Invalid id',
-    });
-  }
+  // if (!tour) {
+  //   return res.status(404).json({
+  //     status: 'Fail',
+  //     message: 'Invalid id',
+  //   });
+  // }
   res.status(200).json({
     status: 'Success',
     //   results: tours.length,
@@ -56,12 +67,12 @@ exports.createTour = (req, res) => {
 exports.updateTour = (req, res) => {
   // for the update operation
   // don't need the entire entry like in PUT
-  if (parseInt(req.params.id) > tours.length) {
-    return res.status(404).json({
-      status: 'Fail',
-      message: 'Invalid id',
-    });
-  }
+  // if (parseInt(req.params.id) > tours.length) {
+  //   return res.status(404).json({
+  //     status: 'Fail',
+  //     message: 'Invalid id',
+  //   });
+  // }
   res.status(200).json({
     status: 'Success',
     data: {
@@ -71,12 +82,6 @@ exports.updateTour = (req, res) => {
 };
 
 exports.deleteTour = (req, res) => {
-  if (parseInt(req.params.id) > tours.length) {
-    return res.status(404).json({
-      status: 'Fail',
-      message: 'Invalid id',
-    });
-  }
   res.status(204).json({
     status: 'Success',
     data: null,
