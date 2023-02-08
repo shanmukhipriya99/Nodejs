@@ -27,8 +27,4 @@ app.use('/api/v1/users', userRouter);
 // app.patch('/api/v1/tours/:id', updateTour);
 // app.delete('/api/v1/tours/:id', deleteTour);
 
-// Start Server
-const port = 3000;
-app.listen(port, () => {
-  console.log(`Running on port: ${port}`);
-});
+module.exports = app;
