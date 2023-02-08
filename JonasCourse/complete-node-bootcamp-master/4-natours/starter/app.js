@@ -3,6 +3,16 @@ const express = require('express');
 const app = express();
 
 app.use(express.json()); // middleware that handles the json input
+// middleware functions that apply to every API call if positioned before the route handler
+app.use((req, res, next) => {
+  console.log('Middleware here!');
+  next();
+});
+
+app.use((req, res, next) => {
+    req.requestTime = new Date().toISOString();
+    next();
+})
 
 const port = 3000;
 
@@ -11,6 +21,7 @@ const tours = JSON.parse(fs.readFileSync('./dev-data/data/tours-simple.json'));
 const getAllTours = (req, res) => {
   res.status(200).json({
     status: 'Success',
+    requestedAt: req.requestTime,
     results: tours.length,
     data: {
       tours,
@@ -95,7 +106,11 @@ const deleteTour = (req, res) => {
 // app.delete('/api/v1/tours/:id', deleteTour);
 
 app.route('/api/v1/tours').get(getAllTours).post(createTour);
-app.route('/api/v1/tours/:id').get(getTour).patch(updateTour).delete(deleteTour)
+app
+  .route('/api/v1/tours/:id')
+  .get(getTour)
+  .patch(updateTour)
+  .delete(deleteTour);
 
 app.listen(port, () => {
   console.log(`Running on port: ${port}`);
