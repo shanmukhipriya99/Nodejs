@@ -15,26 +15,34 @@ const Tour = require('../models/tourModel');
 //   next();
 // };
 
-exports.checkBody = (req, res, next) => {
-  console.log(req.body);
-  if (!req.body.name || !req.body.price) {
-    return res.status(400).json({
-      status: 'Fail',
-      message: 'Missing required info',
+// exports.checkBody = (req, res, next) => {
+//   console.log(req.body);
+//   if (!req.body.name || !req.body.price) {
+//     return res.status(400).json({
+//       status: 'Fail',
+//       message: 'Missing required info',
+//     });
+//   }
+//   next();
+// };
+
+exports.getAllTours = async (req, res) => {
+  try {
+    const tours = await Tour.find();
+    res.status(200).json({
+      status: 'Success',
+      requestedAt: req.requestTime,
+      results: tours.length,
+      data: {
+        tours,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'Failed',
+      message: err,
     });
   }
-  next();
-};
-
-exports.getAllTours = (req, res) => {
-  res.status(200).json({
-    status: 'Success',
-    requestedAt: req.requestTime,
-    // results: tours.length,
-    // data: {
-    //   tours,
-    // },
-  });
 };
 
 exports.getTour = (req, res) => {
@@ -56,7 +64,7 @@ exports.getTour = (req, res) => {
   // });
 };
 
-exports.createTour = (req, res) => {
+exports.createTour = async (req, res) => {
   // console.log(req.body);
   // const newId = tours[tours.length - 1].id + 1;
   // const newTour = Object.assign({ id: newId }, req.body);
@@ -66,12 +74,20 @@ exports.createTour = (req, res) => {
   //   JSON.stringify(tours),
   //   (err) => {
   //     if (err) return console.log('Couldnt write the new tour');
-  res.status(201).json({
-    status: 'Success',
-    // data: {
-    //   tour: newTour,
-    // },
-  });
+  try {
+    const newTour = await Tour.create(req.body);
+    res.status(201).json({
+      status: 'Success',
+      data: {
+        tour: newTour,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'Failed',
+      message: err,
+    });
+  }
   // }
   // );
 };
