@@ -100,7 +100,7 @@ exports.createTour = async (req, res) => {
   // );
 };
 
-exports.updateTour = (req, res) => {
+exports.updateTour = async (req, res) => {
   // for the update operation
   // don't need the entire entry like in PUT
   // if (parseInt(req.params.id) > tours.length) {
@@ -109,17 +109,37 @@ exports.updateTour = (req, res) => {
   //     message: 'Invalid id',
   //   });
   // }
-  res.status(200).json({
-    status: 'Success',
-    data: {
-      tour: `Updated the tour with id ${req.params.id}`,
-    },
-  });
+  try {
+    const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    res.status(200).json({
+      status: 'Success',
+      data: {
+        message: `Updated the tour with id ${req.params.id}`,
+        tour,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'Failed',
+      message: err,
+    });
+  }
 };
 
-exports.deleteTour = (req, res) => {
-  res.status(204).json({
-    status: 'Success',
-    data: null,
-  });
+exports.deleteTour = async (req, res) => {
+  try {
+    await Tour.findByIdAndDelete(req.params.id);
+    res.status(204).json({
+      status: 'Success',
+      data: null,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'Failed',
+      message: err,
+    });
+  }
 };
