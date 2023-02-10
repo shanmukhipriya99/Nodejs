@@ -45,7 +45,7 @@ exports.getAllTours = async (req, res) => {
   }
 };
 
-exports.getTour = (req, res) => {
+exports.getTour = async (req, res) => {
   // console.log(req.params)
   // const tour = tours.find((el) => el.id === parseInt(req.params.id, 10));
   //   if (parseInt(req.params.id) > tours.length) {
@@ -55,13 +55,21 @@ exports.getTour = (req, res) => {
   //     message: 'Invalid id',
   //   });
   // }
-  // res.status(200).json({
-  //   status: 'Success',
-  //   //   results: tours.length,
-  //   data: {
-  //     tour,
-  //   },
-  // });
+  try {
+    const tour = await Tour.findById(req.params.id);
+    res.status(200).json({
+      status: 'Success',
+      //   results: tours.length,
+      data: {
+        tour,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'Failed',
+      message: err,
+    });
+  }
 };
 
 exports.createTour = async (req, res) => {
