@@ -1,0 +1,3 @@
+on MAC, the following works for me:
+do npm i ndb --save-dev , then sudo npm run debug to open Chromium for the first time.
+After that, each time needs to re-open Chromium, just run npm run debug
