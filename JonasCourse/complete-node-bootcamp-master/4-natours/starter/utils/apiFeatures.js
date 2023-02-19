@@ -13,7 +13,8 @@ class APIFeatures {
     // 1B. Advanced Filtering
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-
+    // // { difficulty: easy, duration: { $gte: 5 } } => What MongoDB requires...
+    // // { duration: { gte: '5' }, difficulty: 'easy' } => What is parsed...
     this.query = this.query.find(JSON.parse(queryStr));
     return this;
   }
