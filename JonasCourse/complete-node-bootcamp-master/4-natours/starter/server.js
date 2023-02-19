@@ -34,6 +34,15 @@ mongoose
 //   });
 // Start Server
 const port = 3000 || process.env.PORT;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Running on port: ${port}`);
+});
+
+// Unhadled promise rejections
+process.on('unhandledRejection', (err) => {
+  console.log(err.name, err.message);
+  console.log('UNHANDLED REJECTION! Shutting down...');
+  server.close(() => {
+    process.exit(1);
+  });
 });
