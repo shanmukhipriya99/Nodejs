@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -27,7 +28,26 @@ const userSchema = new mongoose.Schema({
   passwordConfirm: {
     type: String,
     required: [true, 'Password is required'],
+    validate: {
+      // This only works on CREATE & SAVE!
+      // User.create() || User.save()
+      validator: function (el) {
+        return el === this.password;
+      },
+      message: 'Passwrods do not match!',
+    },
   },
+});
+
+// Document middleware for encrypting passwords
+userSchema.pre('save', async function (next) {
+  // only run this function if password was actually modified
+  if (!this.isModified('password')) return next();
+  // hash the password with a cost of 12 => Salting
+  this.password = await bcrypt.hash(this.password, 12);
+  // delete this field
+  this.passwordConfirm = undefined;
+  next();
 });
 
 const User = mongoose.model('User', userSchema);
