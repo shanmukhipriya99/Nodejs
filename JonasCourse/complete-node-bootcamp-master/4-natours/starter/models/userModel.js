@@ -38,6 +38,7 @@ const userSchema = new mongoose.Schema({
       message: 'Passwrods do not match!',
     },
   },
+  passwordChangedAt: Date,
 });
 
 // Document middleware for encrypting passwords
@@ -51,12 +52,24 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-// Instance method
+// Instance method-1
 userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
+};
+// Instance method-2
+userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10 // base 10 number
+    );
+    return JWTTimestamp < changedTimestamp;
+  }
+  // If not changed
+  return false;
 };
 
 const User = mongoose.model('User', userSchema);
