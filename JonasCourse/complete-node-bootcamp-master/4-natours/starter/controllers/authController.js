@@ -84,3 +84,17 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = freshUser;
   next();
 });
+// Usually middleware functions cannot take in parameters but there are two parameters in
+// this case. So we are creating a wrapper function that returns the middleware function
+// that we actually want to create
+exports.restrictTo =
+  (...roles) =>
+  (req, res, next) => {
+    // roles is an array => ['admin', 'lead-guide']
+    if (!roles.includes(req.user.role)) {
+      // req.user=freshUser from the protect middleware, to check if the current user's
+      // role is in the roles array or not
+      return next(new AppError('Not authorized to perform this action', 403));
+    }
+    next();
+  };
