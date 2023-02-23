@@ -60,6 +60,14 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+userSchema.pre('save', function (next) {
+  if (!this.isModified('password') || this.isNew) return next();
+  this.passwordChangedAt = Date.now() - 1000;
+  // subtracting 1 sec as sometimes this maybe delayed when
+  // compared to the tome when the new jwt was created
+  next();
+});
+
 // Instance method-1
 userSchema.methods.correctPassword = async function (
   candidatePassword,
