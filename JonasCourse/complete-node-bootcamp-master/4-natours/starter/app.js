@@ -37,7 +37,18 @@ app.use(mongoSanitize());
 // Data sanitization against XSS (cross-site scripting)
 app.use(xss());
 // prevent parameter pollution
-app.use(hpp());
+app.use(
+  hpp({
+    whitelist: [
+      'duration',
+      'ratingsQuantity',
+      'ratingsAverage',
+      'maxGroupSize',
+      'difficulty',
+      'price',
+    ],
+  })
+);
 
 app.use(express.static('./public'));
 // middleware functions that apply to every API call if positioned before the route handler
