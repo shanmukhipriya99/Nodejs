@@ -7,6 +7,7 @@ const filterObj = (obj, ...allowedFields) => {
   Object.keys(obj).forEach((el) => {
     if (allowedFields.includes(el)) newObj[el] = obj[el];
   });
+  return newObj;
 };
 
 // Route Handlers
@@ -31,14 +32,14 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   // 2) Filtered out unwanted field names that are not allowed to be updated
   const filteredBody = filterObj(req.body, 'name', 'email');
   // 3) Update user document
-  const updateUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true,
   });
   res.status(200).json({
     status: 'Success',
     data: {
-      user: updateUser,
+      user: updatedUser,
     },
   });
 });
