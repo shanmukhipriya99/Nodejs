@@ -2,6 +2,9 @@ const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -28,6 +31,14 @@ app.use(
     limit: '10kb',
   })
 ); // middleware that handles the json input
+
+// Data sanitization against NoSQL query injection
+app.use(mongoSanitize());
+// Data sanitization against XSS (cross-site scripting)
+app.use(xss());
+// prevent parameter pollution
+app.use(hpp());
+
 app.use(express.static('./public'));
 // middleware functions that apply to every API call if positioned before the route handler
 app.use((req, res, next) => {
