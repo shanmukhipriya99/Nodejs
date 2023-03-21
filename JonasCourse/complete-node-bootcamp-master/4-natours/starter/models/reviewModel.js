@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const reviewModel = new mongoose.Schema(
+const reviewSchema = new mongoose.Schema(
   {
     review: {
       type: String,
@@ -34,6 +34,17 @@ const reviewModel = new mongoose.Schema(
   }
 );
 
-const Review = mongoose.model('Review', reviewModel);
+reviewSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'tour',
+    select: 'name',
+  }).populate({
+    path: 'user',
+    select: 'name photo',
+  });
+  next();
+});
+
+const Review = mongoose.model('Review', reviewSchema);
 
 module.exports = Review;
