@@ -116,30 +116,7 @@ exports.createTour = catchAsync(async (req, res, next) => {
   // );
 });
 
-exports.updateTour = catchAsync(async (req, res, next) => {
-  // for the update operation
-  // don't need the entire entry like in PUT
-  // if (parseInt(req.params.id) > tours.length) {
-  //   return res.status(404).json({
-  //     status: 'Fail',
-  //     message: 'Invalid id',
-  //   });
-  // }
-  const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
-  if (!tour) {
-    return next(new AppError('No tour found with that ID', 404));
-  }
-  res.status(200).json({
-    status: 'Success',
-    data: {
-      message: `Updated the tour with id ${req.params.id}`,
-      tour,
-    },
-  });
-});
+exports.updateTour = factory.updateOne(Tour);
 
 exports.deleteTour = factory.deleteOne(Tour);
 // exports.deleteTour = catchAsync(async (req, res, next) => {

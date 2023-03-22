@@ -12,3 +12,23 @@ exports.deleteOne = (Model) =>
       data: null,
     });
   });
+
+exports.updateOne = (Model) =>
+  catchAsync(async (req, res, next) => {
+    // for the update operation
+    // don't need the entire entry like in PUT
+    const document = await Model.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!document) {
+      return next(new AppError('No document found with that ID', 404));
+    }
+    res.status(200).json({
+      status: 'Success',
+      data: {
+        message: `Updated the document with id ${req.params.id}`,
+        document,
+      },
+    });
+  });
