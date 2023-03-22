@@ -95,26 +95,28 @@ exports.getTour = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createTour = catchAsync(async (req, res, next) => {
-  // console.log(req.body);
-  // const newId = tours[tours.length - 1].id + 1;
-  // const newTour = Object.assign({ id: newId }, req.body);
-  // tours.push(newTour);
-  // fs.writeFile(
-  //   './dev-data/data/tours-simple.json',
-  //   JSON.stringify(tours),
-  //   (err) => {
-  //     if (err) return console.log('Couldnt write the new tour');
-  const newTour = await Tour.create(req.body);
-  res.status(201).json({
-    status: 'Success',
-    data: {
-      tour: newTour,
-    },
-  });
-  // }
-  // );
-});
+// exports.createTour = catchAsync(async (req, res, next) => {
+//   // console.log(req.body);
+//   // const newId = tours[tours.length - 1].id + 1;
+//   // const newTour = Object.assign({ id: newId }, req.body);
+//   // tours.push(newTour);
+//   // fs.writeFile(
+//   //   './dev-data/data/tours-simple.json',
+//   //   JSON.stringify(tours),
+//   //   (err) => {
+//   //     if (err) return console.log('Couldnt write the new tour');
+//   const newTour = await Tour.create(req.body);
+//   res.status(201).json({
+//     status: 'Success',
+//     data: {
+//       tour: newTour,
+//     },
+//   });
+//   // }
+//   // );
+// });
+
+exports.createTour = factory.createOne(Tour);
 
 exports.updateTour = factory.updateOne(Tour);
 
