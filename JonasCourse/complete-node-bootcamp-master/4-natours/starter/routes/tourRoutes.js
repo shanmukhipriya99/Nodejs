@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const tourController = require('../controllers/tourController');
 const authController = require('../controllers/authController');
+const reviewController = require('../controllers/reviewController');
 
 // router.param('id', tourController.checkID);
 router
@@ -25,6 +26,18 @@ router
     authController.protect,
     authController.restrictTo('admin', 'lead-guide'),
     tourController.deleteTour
+  );
+
+// POST /tours/234fad4/reviews
+// GET /tours/234fad4/reviews
+// GET /tours/234fad4/reviews/96fvd53
+
+router
+  .route('/:tourId/reviews')
+  .post(
+    authController.protect,
+    authController.restrictTo('user'),
+    reviewController.createReview
   );
 
 module.exports = router;
