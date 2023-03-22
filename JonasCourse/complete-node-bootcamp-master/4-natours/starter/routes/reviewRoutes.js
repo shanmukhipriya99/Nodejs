@@ -13,6 +13,4 @@ router
     reviewController.createReview
   );
 
-router.get('/:id', reviewController.getReview);
-
 module.exports = router;
