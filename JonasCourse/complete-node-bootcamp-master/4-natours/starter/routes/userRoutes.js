@@ -8,6 +8,9 @@ router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
+// this is a middleware that would run before executing any of the
+// following code
+router.use(authController.protect);
 
 router.patch(
   '/updatePassword',
@@ -23,6 +26,8 @@ router.get(
 );
 router.patch('/updateMe', authController.protect, userController.updateMe);
 router.delete('/deleteMe', authController.protect, userController.deleteMe);
+
+router.use(authController.restrictTo('admin'));
 
 router
   .route('/')
