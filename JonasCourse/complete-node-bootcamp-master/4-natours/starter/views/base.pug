@@ -3,7 +3,7 @@ html
     head 
         meta(charset='UTF-8')
         meta(name='viewport' content='width=device-width, initial-scale=1.0')
-        title Natours | Exciting tours for adventurous people 
+        title Natours | #{title} 
         //- <link rel="stylesheet" href="css/style.css" />
         link(rel='stylesheet' href='css/style.css')
         link(rel='shortcut icon' type='image/png' href='img/favicon.png')
@@ -14,8 +14,8 @@ html
         include _header 
 
         // Content
-        section.overview 
-            h1=tour 
+        block content 
+            h1 This is a placeholder heading  
 
         // Footer
         include _footer
