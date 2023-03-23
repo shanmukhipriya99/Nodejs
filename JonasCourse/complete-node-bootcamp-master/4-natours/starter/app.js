@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
@@ -13,7 +14,14 @@ const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 
 const app = express();
+
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
 // Global Middlewares
+// Serving static files
+// app.use(express.static('./public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet()); // Set security HTTP headers
 // console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'development') {
@@ -51,7 +59,6 @@ app.use(
   })
 );
 
-app.use(express.static('./public'));
 // middleware functions that apply to every API call if positioned before the route handler
 app.use((req, res, next) => {
   console.log('Middleware here!');
@@ -64,6 +71,10 @@ app.use((req, res, next) => {
 });
 
 // List of APIs/Routes
+app.get('/', (req, res) => {
+  res.status(200).render('base');
+});
+
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
