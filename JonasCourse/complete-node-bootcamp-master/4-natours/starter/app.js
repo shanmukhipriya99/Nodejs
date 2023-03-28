@@ -59,6 +59,7 @@ app.use(
     limit: '10kb',
   })
 ); // middleware that handles the json input
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookieParser());
 
 // Data sanitization against NoSQL query injection

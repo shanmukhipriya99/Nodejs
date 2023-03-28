@@ -6,7 +6,7 @@ import { logout } from '../../controllers/authController';
 
 // DOM Elements
 const mapBox = document.getElementById('map');
-const loginForm = document.querySelector('.form');
+const loginForm = document.querySelector('.form--login');
 const logOutBtn = document.querySelector('.nav__el--logout');
 
 // DELEGATION

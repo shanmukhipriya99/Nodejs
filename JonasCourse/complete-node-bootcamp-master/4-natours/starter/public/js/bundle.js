@@ -113269,7 +113269,7 @@ var _login = require("./login");
 var _authController = require("../../controllers/authController");
 // DOM Elements
 var mapBox = document.getElementById('map');
-var loginForm = document.querySelector('.form');
+var loginForm = document.querySelector('.form--login');
 var logOutBtn = document.querySelector('.nav__el--logout');
 
 // DELEGATION
