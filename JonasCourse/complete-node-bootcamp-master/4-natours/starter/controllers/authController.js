@@ -24,7 +24,7 @@ const createSendToken = (user, statusCode, res) => {
   res.cookie('jwt', token, cookieOptions);
   user.password = undefined;
   res.status(statusCode).json({
-    staus: 'success',
+    status: 'success',
     token,
     data: {
       user: user,
@@ -97,6 +97,31 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = freshUser;
   next();
 });
+
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+  if (req.cookies.jwt) {
+    // 1. Verify the JWT
+    const decoded = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRET
+    );
+    //   console.log(decoded);
+    // 2. Check if user still exists
+    const freshUser = await User.findById(decoded.id);
+    if (!freshUser) {
+      return next();
+    }
+    // 3. Check if user changed password after JWT was issued
+    if (freshUser.changedPasswordAfter(decoded.iat)) {
+      return next();
+    }
+    // 4. There is a logged in user
+    res.locals.user = freshUser;
+    return next();
+  }
+  next();
+});
+
 // Usually middleware functions cannot take in parameters but there are two parameters in
 // this case. So we are creating a wrapper function that returns the middleware function
 // that we actually want to create

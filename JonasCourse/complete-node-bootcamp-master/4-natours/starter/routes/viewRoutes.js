@@ -10,9 +10,10 @@ const router = express.Router();
 //     user: 'Sandy',
 //   });
 // });
+router.use(authController.isLoggedIn);
 
 router.get('/', viewsController.getOverview);
-router.get('/tour/:tourSlug', authController.protect, viewsController.getTour);
+router.get('/tour/:tourSlug', viewsController.getTour);
 router.get('/login', viewsController.login);
 
 module.exports = router;
