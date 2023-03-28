@@ -23,7 +23,24 @@ app.set('views', path.join(__dirname, 'views'));
 // Serving static files
 // app.use(express.static('./public'));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(helmet()); // Set security HTTP headers
+// Set security HTTP headers
+app.use(
+  helmet({
+    crossOriginEmbedderPolicy: false,
+    contentSecurityPolicy: {
+      directives: {
+        'child-src': ['blob:'],
+        'connect-src': ['https://*.mapbox.com'],
+        'default-src': ["'self'"],
+        'font-src': ["'self'", 'https://fonts.gstatic.com'],
+        'img-src': ["'self'", 'data:', 'blob:'],
+        'script-src': ["'self'", 'https://*.mapbox.com'],
+        'style-src': ["'self'", 'https:'],
+        'worker-src': ['blob:'],
+      },
+    },
+  })
+);
 // console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
