@@ -25,23 +25,53 @@ app.set('views', path.join(__dirname, 'views'));
 // app.use(express.static('./public'));
 app.use(express.static(path.join(__dirname, 'public')));
 // Set security HTTP headers
+const scriptSrcUrls = [
+  'https://api.tiles.mapbox.com/',
+  'https://api.mapbox.com/',
+];
+const styleSrcUrls = [
+  'https://api.mapbox.com/',
+  'https://api.tiles.mapbox.com/',
+  'https://fonts.googleapis.com/',
+];
+const connectSrcUrls = [
+  'https://api.mapbox.com/',
+  'https://a.tiles.mapbox.com/',
+  'https://b.tiles.mapbox.com/',
+  'https://events.mapbox.com/',
+];
+const fontSrcUrls = ['fonts.googleapis.com', 'fonts.gstatic.com'];
 app.use(
-  helmet({
-    crossOriginEmbedderPolicy: false,
-    contentSecurityPolicy: {
-      directives: {
-        'child-src': ['blob:'],
-        'connect-src': ['https://*.mapbox.com'],
-        'default-src': ["'self'"],
-        'font-src': ["'self'", 'https://fonts.gstatic.com'],
-        'img-src': ["'self'", 'data:', 'blob:'],
-        'script-src': ["'self'", 'https://*.mapbox.com'],
-        'style-src': ["'self'", 'https:'],
-        'worker-src': ['blob:'],
-      },
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      connectSrc: ["'self'", ...connectSrcUrls],
+      scriptSrc: ["'self'", ...scriptSrcUrls],
+      styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+      workerSrc: ["'self'", 'blob:'],
+      // objectSrc: [],
+      imgSrc: ["'self'", 'blob:', 'data:'],
+      fontSrc: ["'self'", ...fontSrcUrls],
     },
   })
 );
+// app.use(
+//   helmet({
+//     crossOriginEmbedderPolicy: false,
+//     contentSecurityPolicy: {
+//       directives: {
+//         'child-src': ['blob:'],
+//         'connect-src': ['https://*.mapbox.com'],
+//         'default-src': ["'self'"],
+//         'font-src': ["'self'", 'https://fonts.gstatic.com'],
+//         'img-src': ["'self'", 'data:', 'blob:'],
+//         'script-src': ["'self'", 'https://*.mapbox.com'],
+//         'style-src': ["'self'", 'https:'],
+//         'worker-src': ['blob:'],
+//       },
+//     },
+//   })
+// );
 // console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
