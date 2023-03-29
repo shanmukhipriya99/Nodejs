@@ -83,7 +83,7 @@ app.use(
 // middleware functions that apply to every API call if positioned before the route handler
 app.use((req, res, next) => {
   console.log('Middleware here!');
-  console.log(req.cookies);
+  // console.log(req.cookies);
   next();
 });
 
