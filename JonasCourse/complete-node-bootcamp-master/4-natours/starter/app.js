@@ -27,6 +27,13 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 // Set security HTTP headers
 const scriptSrcUrls = [
+  'https:',
+  'http:',
+  'blob:',
+  'https://*.mapbox.com',
+  'https://js.stripe.com',
+  'https://m.stripe.network',
+  'https://*.cloudflare.com',
   'https://api.tiles.mapbox.com/',
   'https://api.mapbox.com/',
 ];
@@ -36,6 +43,13 @@ const styleSrcUrls = [
   'https://fonts.googleapis.com/',
 ];
 const connectSrcUrls = [
+  'data:',
+  'blob:',
+  'https://*.stripe.com',
+  'https://*.mapbox.com',
+  'https://*.cloudflare.com/',
+  'https://bundle.js:*',
+  'ws://127.0.0.1:*/',
   'https://api.mapbox.com/',
   'https://a.tiles.mapbox.com/',
   'https://b.tiles.mapbox.com/',
@@ -45,11 +59,19 @@ const fontSrcUrls = ['fonts.googleapis.com', 'fonts.gstatic.com'];
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'"],
+      defaultSrc: ["'self'", 'data:', 'blob:', 'https:', 'ws:'],
       connectSrc: ["'self'", ...connectSrcUrls],
       scriptSrc: ["'self'", ...scriptSrcUrls],
       styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
-      workerSrc: ["'self'", 'blob:'],
+      workerSrc: [
+        "'self'",
+        'blob:',
+        'https://*.tiles.mapbox.com',
+        'https://api.mapbox.com',
+        'https://events.mapbox.com',
+        'https://m.stripe.network',
+      ],
+      frameSrc: ["'self'", 'https:', 'data:', 'https://js.stripe.com'],
       // objectSrc: [],
       imgSrc: ["'self'", 'blob:', 'data:'],
       fontSrc: ["'self'", ...fontSrcUrls],
