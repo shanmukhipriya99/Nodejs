@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
   },
   photo: {
     type: String,
-    default: 'defailt.jpeg',
+    default: `${__dirname}/../../public/img/users/default.jpg`,
   },
   role: {
     type: String,
