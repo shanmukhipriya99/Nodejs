@@ -23,6 +23,7 @@ router.get(
   authController.isLoggedIn,
   viewsController.getTour
 );
+router.get('/signup', viewsController.signup);
 router.get('/login', authController.isLoggedIn, viewsController.login);
 router.get('/me', authController.protect, viewsController.getAccount);
 router.get('/my-tours', authController.protect, viewsController.getMyTours);
