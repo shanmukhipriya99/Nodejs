@@ -12173,7 +12173,7 @@ var updateSettings = /*#__PURE__*/function () {
           });
         case 4:
           res = _context.sent;
-          if (res.data.status === 'success') {
+          if (res.data.status === 'Success') {
             (0, _alert.showAlert)('success', "".concat(type.toUpperCase(), " updated successfully!"));
             window.setTimeout(function () {
               location.reload();
